@@ -9,8 +9,8 @@ int main() {
         cin >> input;
         if (input == "0") break;
         
+        temp = "yes\n";
         for (int i = 0; i < input.size()/2; i++) {
-            temp = "yes\n";
             if (input[i] != input[input.size()-1-i])
                 temp = "no\n";
         }
