@@ -1,4 +1,3 @@
-// MERGE SORT
 #include <iostream>
 using namespace std;
 int num[1000000];
