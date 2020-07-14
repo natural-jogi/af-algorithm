@@ -21,22 +21,22 @@ public:
     
     void push_front(int v) {
         Node *n = new Node();
-        if(empty()) tail = n;
-        else head->prev = n;
-        n->value = v;
         n->prev = NULL;
         n->next = head;
+        n->value = v;
+        if(empty()) tail = n;
+        else head->prev = n;
         head = n;
         size++;
     }
     
     void push_back(int v) {
         Node *n = new Node();
-        if(empty()) head = n;
-        else tail->next = n;
-        n->value = v;
         n->prev = tail;
         n->next = NULL;
+        n->value = v;
+        if(empty()) head = n;
+        else tail->next = n;
         tail = n;
         size++;
     }
@@ -44,11 +44,18 @@ public:
     int pop_front() {
         if (empty()) return -1;
         else {
-            Node *t = head;
-            int v = t->value;
-            head = t->next;
-            if (head != NULL) head->prev = NULL;
-            free(t);
+            int v = head->value;
+            if (size == 1) {
+                delete head, tail;
+                head = NULL;
+                tail = NULL;
+            }
+            else {
+                Node *t = head;
+                head = t->next;
+                head->prev = NULL;
+                delete t;
+            }
             size--;
             return v;
         }
@@ -57,28 +64,35 @@ public:
     int pop_back() {
         if (empty()) return -1;
         else {
-            Node *t = tail;
-            int v = t->value;
-            tail = t->prev;
-            if (tail != NULL) tail->next = NULL;
-            free(t);
+            int v = tail->value;
+            if (size == 1) {
+                delete head, tail;
+                head = NULL;
+                tail = NULL;
+            }
+            else {
+                Node *t = tail;
+                tail = t->prev;
+                tail->next = NULL;
+                delete t;
+            }
             size--;
             return v;
         }
     }
     
     int front() {
-        if (head == NULL) return -1;
+        if (empty()) return -1;
         else return head->value;
     }
     
     int back() {
-        if (tail == NULL) return -1;
+        if (empty()) return -1;
         else return tail->value;
     }
     
     bool empty() {
-        return size == 0;
+        return head == NULL;
     }
 };
 
