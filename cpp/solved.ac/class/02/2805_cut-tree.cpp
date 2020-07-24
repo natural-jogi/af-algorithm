@@ -5,7 +5,7 @@ int main() {
     ios::sync_with_stdio(false);
     
     int n, k;
-    long long e = 0;
+    long e = 0;
     cin >> n >> k;
     int *a = new int[n];
     for (int i = 0; i < n; i++) {
@@ -13,11 +13,13 @@ int main() {
         if (e < a[i]) e = a[i];
     }
     
-    long long m, s, b = 1;
+    long m, s, b = 1;
     while (b <= e) {
         m = (b + e) / 2;
         s = 0;
-        for (int i = 0; i < n; i++) s += a[i] / m;
+        for (int i = 0; i < n; i++) {
+            if (a[i] > m) s += a[i] - m;
+        }
         if (s >= k) b = m+1;
         else e = m-1;
     }
